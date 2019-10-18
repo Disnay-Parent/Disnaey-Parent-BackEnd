@@ -5,6 +5,7 @@
 <h1>Register</h1>
 
 *`HTTP method:`***`POST`**
+
 *`URL:`***`/api/auth/register`**
 
 
