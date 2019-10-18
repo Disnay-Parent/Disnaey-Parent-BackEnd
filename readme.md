@@ -2,9 +2,19 @@
 
 [X] NON-Protected Routes
     
-    ---- Register ----
+Register
+========
 
-    URL: http://localhost:5000/api/auth/register
+    URL: /api/auth/register
+
+Type: Parent
+------------
+
+    Body
+    | Left  | Center  | Right |
+    | :---- | :-----: | ----: |
+    | hello | goodbye | hollo |
+
 
 
 
