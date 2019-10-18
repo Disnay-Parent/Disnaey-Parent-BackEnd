@@ -16,7 +16,7 @@ function register(body) {
         firstName: body.firstName,
         lastName: body.lastName,
         email: body.email,
-        age: body.age,
+        DOB: body.DOB,
         phoneNum: body.phoneNum,
         type: body.type
     })

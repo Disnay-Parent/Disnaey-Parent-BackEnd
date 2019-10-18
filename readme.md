@@ -41,11 +41,14 @@ Body
     Code: 201 (Created),
     Message: "Successfully Registered"
 
-    Code: 500 (Internal Server Error),
-    Message: "Something went wrong when registering user
-
     code: 400 (Bad Request),
     Message: "Please provide all the required fields"
+
+    Code: 400 (Bad Request),
+    Message: "Please provide a valid email"
+
+    Code: 500 (Internal Server Error),
+    Message: "Something went wrong when registering user
 
 
 ####User-Type: Volunteer
@@ -60,7 +63,7 @@ Body
 | email           | String  |   YES    |  YES   | Must have "@" and "."                |
 | DOB             | date    |   YES    |   NO   |                                      |
 | phoneNum        | String  |   YES    |   NO   |                                      |
-| avgPerChild     | Float   |    NO   |   NO   |                                      |
+| avgPerChild     | Float   |    NO    |   NO   | If not provided, defaults to "0"     |
 | priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | CPR_Certified   | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | type            | String  |   YES    |   NO   | Must be "volunteer"                  |
@@ -84,11 +87,14 @@ Body
     Code: 201 (Created),
     Message: "Successfully Registered"
 
-    Code: 500 (Internal Server Error),
-    Message: "Something went wrong when registering user
-
     code: 400 (Bad Request),
     Message: "Please provide all the required fields"
+
+    Code: 400 (Bad Request),
+    Message: "Please provide a valid email"
+
+    Code: 500 (Internal Server Error),
+    Message: "Something went wrong when registering user
 ____________
 
 #Login
