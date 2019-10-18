@@ -2,14 +2,14 @@
 
 [X] NON-Protected Routes
     
-#Register
+#### REGISTER ####
 
 *`HTTP method:`***`POST`**
 *`URL:`***`/api/auth/register`**
 
-```
-User-Type: Parent
-```
+
+ - User-Type: Parent -
+
 
 ```
 Body
