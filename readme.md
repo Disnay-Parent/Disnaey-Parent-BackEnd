@@ -57,10 +57,11 @@ Body
 ```
 
 
-- User-Type: Volunteer
+<h3>User-Type: Volunteer</h3>
 
+
+- Body
 ```
-Body
 | Name            | Type    | Required | Unique | Description                          |
 | :-------------- | :------ | :------: | :----: | :----------------------------------- |
 | username        | string  |   YES    |  YES   |                                      |
@@ -108,27 +109,31 @@ Body
 ```
 ____________
 
-#Login
+<h1>Login</h1>
 
 *`HTTP method:`***`POST`**
 *`URL:`***`/api/auth/login`**
 
-####User-Type: BOTH
+<h3>User-Type: BOTH</h3>
 
-Body
+- Body
+```
 | Name     | Type   | Required |
 | :------- | :----- | :------: |
 | username | string |   YES    |
 | password | String |   YES    |
+```
 
-
-######Example
+- Example
+```
     {
         "username": "IamTheCaptainNow",
         "password": "pass",
     }
+```
 
-######Responses
+- Responses
+```
     Code: 201 (Created),
     Message: "Logged In! Your ID is 13"
     Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6ZWFsIiwiZmlyc3ROYW1lIjoiRWxhbiIsImxhc3ROYW1lIjoiUml6bmlzIiwidHlwZSI6InBhcmVudCIsImlhdCI6MTU3MTM3MjUyNCwiZXhwIjoxNTcxNDU4OTI0fQ.Y9Egs8GKEOl18ePYymcmPtjiynyv3LJg0ujkodjHOug"
@@ -141,6 +146,7 @@ Body
 
     Code: 500 (Internal Server Error),
     Message: "Something went wrong when logging in"
+```
 ____________
 
 
