@@ -2,15 +2,16 @@
 
 [X] NON-Protected Routes
     
-#Register
+<h1>Register</h1>
 
 *`HTTP method:`***`POST`**
 *`URL:`***`/api/auth/register`**
 
 
-####User-Type: Parent
+<h3>User-Type: Parent</h3>
 
 
+```
 Body
 | Name           | Type   | Required | Unique | Description           |
 | :------------- | :----- | :------: | :----: | :-------------------- |
@@ -23,8 +24,10 @@ Body
 | phoneNum       | String |   YES    |   NO   |                       |
 | emergencyPhone | String |   YES    |   NO   |                       |
 | type           | String |   YES    |   NO   | must be "parent"      |
+```
 
-######Example
+- Example
+```
     {
         "username": "IamTheCaptainNow",
         "password": "pass",
@@ -36,8 +39,10 @@ Body
         "emergencyPhone": "098-765-4321",
         "type": "parent"
     }
+```
 
-######Responses
+- Responses
+```
     Code: 201 (Created),
     Message: "Successfully Registered"
 
@@ -49,11 +54,14 @@ Body
 
     Code: 500 (Internal Server Error),
     Message: "Something went wrong when registering user
+```
 
 
-####User-Type: Volunteer
+<h3>User-Type: Volunteer</h3>
 
-Body
+
+- Body
+```
 | Name            | Type    | Required | Unique | Description                          |
 | :-------------- | :------ | :------: | :----: | :----------------------------------- |
 | username        | string  |   YES    |  YES   |                                      |
@@ -67,8 +75,10 @@ Body
 | priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | CPR_Certified   | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | type            | String  |   YES    |   NO   | Must be "volunteer"                  |
+```
 
-######Example
+- Example
+```
     {
         "username": "IamTheCaptainNow",
         "password": "pass",
@@ -82,8 +92,9 @@ Body
         "CPR_Certified": true,
         "type": "volunteer"
     }
-
-######Responses
+```
+- Responses
+```
     Code: 201 (Created),
     Message: "Successfully Registered"
 
@@ -95,29 +106,34 @@ Body
 
     Code: 500 (Internal Server Error),
     Message: "Something went wrong when registering user
+```
 ____________
 
-#Login
+<h1>Login</h1>
 
 *`HTTP method:`***`POST`**
 *`URL:`***`/api/auth/login`**
 
-####User-Type: BOTH
+<h3>User-Type: BOTH</h3>
 
-Body
+- Body
+```
 | Name     | Type   | Required |
 | :------- | :----- | :------: |
 | username | string |   YES    |
 | password | String |   YES    |
+```
 
-
-######Example
+- Example
+```
     {
         "username": "IamTheCaptainNow",
         "password": "pass",
     }
+```
 
-######Responses
+- Responses
+```
     Code: 201 (Created),
     Message: "Logged In! Your ID is 13"
     Token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ6ZWFsIiwiZmlyc3ROYW1lIjoiRWxhbiIsImxhc3ROYW1lIjoiUml6bmlzIiwidHlwZSI6InBhcmVudCIsImlhdCI6MTU3MTM3MjUyNCwiZXhwIjoxNTcxNDU4OTI0fQ.Y9Egs8GKEOl18ePYymcmPtjiynyv3LJg0ujkodjHOug"
@@ -130,6 +146,7 @@ Body
 
     Code: 500 (Internal Server Error),
     Message: "Something went wrong when logging in"
+```
 ____________
 
 
