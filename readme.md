@@ -8,7 +8,7 @@
 *`URL:`***`/api/auth/register`**
 
 
-<h5>User-Type: Parent</h5>
+<h3>User-Type: Parent</h3>
 
 
 ```
