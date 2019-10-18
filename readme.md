@@ -60,7 +60,7 @@
 
 
 - Body
-```
+
 | Name            | Type    | Required | Unique | Description                          |
 | :-------------- | :------ | :------: | :----: | :----------------------------------- |
 | username        | string  |   YES    |  YES   |                                      |
@@ -74,7 +74,7 @@
 | priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | CPR_Certified   | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | type            | String  |   YES    |   NO   | Must be "volunteer"                  |
-```
+
 
 - Example
 ```
@@ -116,12 +116,12 @@ ____________
 <h3>User-Type: BOTH</h3>
 
 - Body
-```
+
 | Name     | Type   | Required |
 | :------- | :----- | :------: |
 | username | string |   YES    |
 | password | String |   YES    |
-```
+
 
 - Example
 ```
