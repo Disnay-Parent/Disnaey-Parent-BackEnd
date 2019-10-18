@@ -8,6 +8,8 @@ exports.up = function(knex) {
       tbl.string('lastName', 100).notNullable()
       tbl.string('email', 100).notNullable().unique()
       tbl.integer('age').notNullable()
+      tbl.string('phoneNum', 100).notNullable()
+      tbl.string('type', 100).notNullable()
   })
 };
 
