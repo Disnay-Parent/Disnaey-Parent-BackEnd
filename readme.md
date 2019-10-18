@@ -1,7 +1,7 @@
 ========== API DOCS ==========
 
 <h1 color="red">[X] NON-Protected Routes</h1>
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
+<span style=“color:green;”> text goes here</span>
     
 <h1>Register</h1>
 
