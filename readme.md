@@ -8,7 +8,7 @@
 *`URL:`***`/api/auth/register`**
 
 
- * User-Type: Parent
+ - User-Type: Parent
 
 
 ```
@@ -26,7 +26,7 @@ Body
 | type           | String |   YES    |   NO   | must be "parent"      |
 ```
 
-Example
+- Example
 ```
     {
         "username": "IamTheCaptainNow",
@@ -41,7 +41,7 @@ Example
     }
 ```
 
-Responses
+- Responses
 ```
     Code: 201 (Created),
     Message: "Successfully Registered"
@@ -57,8 +57,9 @@ Responses
 ```
 
 
-####User-Type: Volunteer
+- User-Type: Volunteer
 
+```
 Body
 | Name            | Type    | Required | Unique | Description                          |
 | :-------------- | :------ | :------: | :----: | :----------------------------------- |
@@ -73,8 +74,10 @@ Body
 | priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | CPR_Certified   | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
 | type            | String  |   YES    |   NO   | Must be "volunteer"                  |
+```
 
-######Example
+- Example
+```
     {
         "username": "IamTheCaptainNow",
         "password": "pass",
@@ -88,8 +91,9 @@ Body
         "CPR_Certified": true,
         "type": "volunteer"
     }
-
-######Responses
+```
+- Responses
+```
     Code: 201 (Created),
     Message: "Successfully Registered"
 
@@ -101,6 +105,7 @@ Body
 
     Code: 500 (Internal Server Error),
     Message: "Something went wrong when registering user
+```
 ____________
 
 #Login
