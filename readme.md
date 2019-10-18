@@ -10,9 +10,8 @@
 
 <h3>User-Type: Parent</h3>
 
+- Body
 
-```
-Body
 | Name           | Type   | Required | Unique | Description           |
 | :------------- | :----- | :------: | :----: | :-------------------- |
 | username       | string |   YES    |  YES   |                       |
@@ -24,7 +23,7 @@ Body
 | phoneNum       | String |   YES    |   NO   |                       |
 | emergencyPhone | String |   YES    |   NO   |                       |
 | type           | String |   YES    |   NO   | must be "parent"      |
-```
+
 
 - Example
 ```
