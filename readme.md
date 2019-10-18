@@ -112,6 +112,7 @@ ____________
 <h1>Login</h1>
 
 *`HTTP method:`***`POST`**
+
 *`URL:`***`/api/auth/login`**
 
 <h3>User-Type: BOTH</h3>
