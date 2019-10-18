@@ -16,9 +16,11 @@ router.post('/register', async (req, res) => {
 
     if(!user.type) {
         res.status(400).json({ message: 'Please provide an user type '})
+    } else if(!user.email.includes('@') || !user.email.includes('.')) {
+        res.status(400).json({ message: 'Please provide a valid email' })
     } else {
         if(user.type.toLowerCase() === 'parent') {
-            if(user.username.length === 0 || user.password.length === 0 || user.firstName.length === 0 ||user.lastName.length === 0 ||user.email.length === 0 || !user.age || user.emergencyPhone.length === 0) {
+            if(user.username.length === 0 || user.password.length === 0 || user.firstName.length === 0 ||user.lastName.length === 0 ||user.email.length === 0 || !user.DOB || user.emergencyPhone.length === 0) {
                 res.status(400).json({ message: 'Please provide all the required fields' })
             } else {
                 try {
@@ -30,7 +32,7 @@ router.post('/register', async (req, res) => {
                 }
             }
         } else {
-            if(user.username.length === 0 || user.password.length === 0 || user.firstName.length === 0 ||user.lastName.length === 0 ||user.email.length === 0 || !user.age || !user.avgPerChild) {
+            if(user.username.length === 0 || user.password.length === 0 || user.firstName.length === 0 ||user.lastName.length === 0 ||user.email.length === 0 || !user.DOB || !user.avgPerChild) {
                 res.status(400).json({ message: 'Please provide all the required fields' })
             } else {
                 try {
