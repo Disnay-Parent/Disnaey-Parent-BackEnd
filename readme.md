@@ -8,7 +8,7 @@
 *`URL:`***`/api/auth/register`**
 
 
- + User-Type: Parent
+ * User-Type: Parent
 
 
 ```
