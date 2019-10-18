@@ -7,8 +7,9 @@
 *`HTTP method:`***`POST`**
 *`URL:`***`/api/auth/register`**
 
-
+```
 ####User-Type: Parent
+```
 
 
 Body
