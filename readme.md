@@ -1,6 +1,6 @@
 ========== API DOCS ==========
 
-<h1>[X] NON-Protected Routes</h1>
+<h1><strong>[X] NON-Protected Routes</strong></h1>
     
 <h1>Register</h1>
 
