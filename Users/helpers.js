@@ -4,7 +4,9 @@ const db = require('../data/db.js')
 module.exports = {
     logged,
     getAllParents,
-    getAllVolunteers
+    getAllVolunteers,
+    getSingleParent,
+    getSingleVolunteer
 }
 
 function logged(id) {
@@ -28,6 +30,7 @@ function logged(id) {
     })
 }
 
+// All parents
 function getAllParents() {
     return db('users')
     .then(users => {
@@ -51,6 +54,7 @@ function getAllParents() {
     })
 }
 
+// All Volunteers
 function getAllVolunteers() {
     return db('users')
     .then(users => {
@@ -62,6 +66,8 @@ function getAllVolunteers() {
                     if(each.id === volunteer.user_id) {
                         for(let key in volunteer) {
                             if(key !== 'id' && key !== 'user_id'){
+                                volunteer.priceNegotiable == 0 ? volunteer.priceNegotiable = false : volunteer.priceNegotiable = true
+                                volunteer.CPR_Certified == 0 ? volunteer.CPR_Certified = false : volunteer.CPR_Certified = true
                                 each[key] = volunteer[key]
                             }
                         }
@@ -70,6 +76,56 @@ function getAllVolunteers() {
                 })
             })
             return array
+        })
+    })
+}
+
+// Single Parent
+function getSingleParent(id) {
+    return db('users')
+    .where({id})
+    .first()
+    .then(user => {
+        return db('parents')
+        .where({user_id: id})
+        .first()
+        .then(rest => {
+            if(!rest) {
+                return `Parent with an ID of ${id} could not be found.`
+            } else {
+                for(let key in rest) {
+                    if(key !== 'id' && key !== 'user_id'){
+                        user[key] = rest[key]
+                    }
+                }
+                return user
+            }
+        })
+    })
+}
+
+// Single Volunteer
+function getSingleVolunteer(id) {
+    return db('users')
+    .where({id})
+    .first()
+    .then(user => {
+        return db('volunteers')
+        .where({user_id: id})
+        .first()
+        .then(rest => {
+            if(!rest) {
+                return `Volunteer with an ID of ${id} could not be found.`
+            } else {
+                for(let key in rest) {
+                    if(key !== 'id' && key !== 'user_id'){
+                        rest.priceNegotiable == 0 ? rest.priceNegotiable = false : rest.priceNegotiable = true
+                        rest.CPR_Certified == 0 ? rest.CPR_Certified = false : rest.CPR_Certified = true
+                        user[key] = rest[key]
+                    }
+                }
+                return user
+            }
         })
     })
 }
