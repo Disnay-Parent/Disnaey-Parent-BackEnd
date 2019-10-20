@@ -156,6 +156,7 @@ ____________
 <h3>Each one of these endpoints will require a HEADER</h3>
 
 Like so:
+
 |     name      |  type  |                               description                                |
 | :-----------: | :----: | :----------------------------------------------------------------------: |
 | authorization | String | Token to make sure that the endpoints are being used by a logged in user |
