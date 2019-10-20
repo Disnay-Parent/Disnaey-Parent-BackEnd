@@ -156,6 +156,7 @@ ____________
 <h3>Each one of these endpoints will require a HEADER</h3>
 
 Like so:
+
 |     name      |  type  |                               description                                |
 | :-----------: | :----: | :----------------------------------------------------------------------: |
 | authorization | String | Token to make sure that the endpoints are being used by a logged in user |
@@ -168,6 +169,7 @@ Like so:
 *`URL:`***`/api/users/logged`**
 
 - Body
+
 ```No Body Required!```
 
 - Example
@@ -208,7 +210,7 @@ Like so:
 - Responses
 ```
 Code: 200 (OK)
-Data: Logged In User Object
+Data: {Logged In User Object}
 
 Code 500 (Internal Server Error)
 Message: 'Something went wrong with the server!'
@@ -216,16 +218,107 @@ Message: 'Something went wrong with the server!'
 __________
 
 
+<h1>All Parents</h1>
 
+*`HTTP method:`***`GET`**
 
+*`URL:`***`/api/users/parents`**
 
+-Body
 
+```No Body Required!```
 
+- Example
 
+```
+[
+    {
+        "id": 6,
+        "username": "janedoe",
+        "password": "$2a$04$w3o46k6r1PM1OLoB7rsTNu2KnZjnGHODZjK/MY5Tdgq2M7otOAziC",
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "email": "janedoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "12345",
+        "type": "parent",
+        "emergencyPhone": "32424"
+    },
+    {
+        "id": 5,
+        "username": "johndoe",
+        "password": "$2a$04$LIrEVjCvdZv98KdKXAIQouE8LE38ga9efNctjymLxe1Vk6uXpa0Oe",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "12345",
+        "type": "parent",
+        "emergencyPhone": "2112313"
+    }
+```
 
+- Responses
+```
+Code: 200 (OK)
+Data: [Array with { Existing Parent Objects}]
 
+Code 500 (Internal Server Error)
+Message: 'Something went wrong with the server!'
+```
+__________
 
+<h1>All Parents</h1>
 
+*`HTTP method:`***`GET`**
 
+*`URL:`***`/api/users/parents`**
 
+-Body
 
+```No Body Required!```
+
+- Example
+
+```
+[
+    {
+        "id": 6,
+        "username": "janedoe",
+        "password": "$2a$04$w3o46k6r1PM1OLoB7rsTNu2KnZjnGHODZjK/MY5Tdgq2M7otOAziC",
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "email": "janedoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "12345",
+        "type": "volunteer",
+        "avgPerChild": 50,
+        "priceNegotiable": 0,
+        "CPR_Certified": 0
+    },
+    {
+        "id": 5,
+        "username": "johndoe",
+        "password": "$2a$04$LIrEVjCvdZv98KdKXAIQouE8LE38ga9efNctjymLxe1Vk6uXpa0Oe",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "12345",
+        "type": "volunteer",
+        "avgPerChild": 10,
+        "priceNegotiable": 0,
+        "CPR_Certified": 0
+    }
+]
+```
+
+- Responses
+```
+Code: 200 (OK)
+Data: [Array with { Existing Volunteer Objects}]
+
+Code 500 (Internal Server Error)
+Message: 'Something went wrong with the server!'
+```
+__________
