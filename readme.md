@@ -69,7 +69,7 @@
 | firstName       | String  |   YES    |   NO   |                                      |
 | lastName        | String  |   YES    |   NO   |                                      |
 | email           | String  |   YES    |  YES   | Must have "@" and "."                |
-| DOB             | date    |   YES    |   NO   |                                      |
+| DOB             | Date    |   YES    |   NO   |                                      |
 | phoneNum        | String  |   YES    |   NO   |                                      |
 | avgPerChild     | Float   |    NO    |   NO   | If not provided, defaults to "0"     |
 | priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
@@ -151,7 +151,69 @@ ____________
 ____________
 
 
+<h1>[X] Protected Routes</h1>
 
+<h3>Each one of these endpoints will require a HEADER</h3>
+
+Like so:
+|     name      |  type  |                               description                                |
+| :-----------: | :----: | :----------------------------------------------------------------------: |
+| authorization | String | Token to make sure that the endpoints are being used by a logged in user |
+
+
+<h1>Logged In User</h1>
+
+*`HTTP method:`***`GET`**
+
+*`URL:`***`/api/users/logged`**
+
+- Body
+```No Body Required!```
+
+- Example
+
+```
+==== Volunteer ====
+{
+  "id": 5,
+  "username": "johndoe",
+  "password": "$2a$04$LIrEVjCvdZv98KdKXAIQouE8LE38ga9efNctjymLxe1Vk6uXpa0Oe",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "johndoe@gmail.com",
+  "DOB": "03-13-1996",
+  "phoneNum": "12345",
+  "type": "volunteer",
+  "avgPerChild": 10,
+  "priceNegotiable": 0,
+  "CPR_Certified": 0
+}
+
+
+==== Parent ====
+{
+  "id": 6,
+  "username": "janedoe",
+  "password": "$2a$04$w3o46k6r1PM1OLoB7rsTNu2KnZjnGHODZjK/MY5Tdgq2M7otOAziC",
+  "firstName": "Jane",
+  "lastName": "Doe",
+  "email": "janedoe@gmail.com",
+  "DOB": "03-13-1996",
+  "phoneNum": "12345",
+  "type": "parent",
+  "emergencyPhone": "32424"
+}
+```
+
+- Responses
+```
+Code: 200 (OK)
+Data: Logged In User Object
+
+Code 500 (Internal Server Error)
+Message: 'Something went wrong with the server!'
+```
+__________
 
 
 
