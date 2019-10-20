@@ -162,6 +162,8 @@ Like so:
 | authorization | String | Token to make sure that the endpoints are being used by a logged in user |
 
 
+======== GET Requests ========
+
 <h1>Logged In User</h1>
 
 *`HTTP method:`***`GET`**
@@ -187,8 +189,8 @@ Like so:
   "phoneNum": "12345",
   "type": "volunteer",
   "avgPerChild": 10,
-  "priceNegotiable": 0,
-  "CPR_Certified": 0
+  "priceNegotiable": true,
+  "CPR_Certified": true
 }
 
 
@@ -224,7 +226,7 @@ __________
 
 *`URL:`***`/api/users/parents`**
 
--Body
+- Body
 
 ```No Body Required!```
 
@@ -256,6 +258,7 @@ __________
         "type": "parent",
         "emergencyPhone": "2112313"
     }
+]
 ```
 
 - Responses
@@ -274,7 +277,7 @@ __________
 
 *`URL:`***`/api/users/parents`**
 
--Body
+- Body
 
 ```No Body Required!```
 
@@ -293,8 +296,8 @@ __________
         "phoneNum": "12345",
         "type": "volunteer",
         "avgPerChild": 50,
-        "priceNegotiable": 0,
-        "CPR_Certified": 0
+        "priceNegotiable": true,
+        "CPR_Certified": false
     },
     {
         "id": 5,
@@ -307,8 +310,8 @@ __________
         "phoneNum": "12345",
         "type": "volunteer",
         "avgPerChild": 10,
-        "priceNegotiable": 0,
-        "CPR_Certified": 0
+        "priceNegotiable": false,
+        "CPR_Certified": false
     }
 ]
 ```
@@ -317,6 +320,90 @@ __________
 ```
 Code: 200 (OK)
 Data: [Array with { Existing Volunteer Objects}]
+
+Code 500 (Internal Server Error)
+Message: 'Something went wrong with the server!'
+```
+__________
+
+
+<h1>Single Parent by ID</h1>
+
+*`HTTP method:`***`GET`**
+
+*`URL:`***`/api/users/parent/:id`**
+
+- Body
+
+```No Body Required!```
+
+- Example
+
+```
+{
+    "id": 5,
+    "username": "johndoe",
+    "password": "$2a$04$LIrEVjCvdZv98KdKXAIQouE8LE38ga9efNctjymLxe1Vk6uXpa0Oe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@gmail.com",
+    "DOB": "03-13-1996",
+    "phoneNum": "12345",
+    "type": "parent",
+    "emergencyPhone": '123-456-7890"
+}
+```
+
+- Responses
+```
+Code: 200 (OK)
+Data: { Specified] Parent Object }
+
+Code: 404 (Not Found!)
+Message: "Parent with an ID of [dynamic ID] could not be found."
+
+Code 500 (Internal Server Error)
+Message: 'Something went wrong with the server!'
+```
+__________
+
+
+<h1>Single Volunteer by ID</h1>
+
+*`HTTP method:`***`GET`**
+
+*`URL:`***`/api/users/volunteer/:id`**
+
+- Body
+
+```No Body Required!```
+
+- Example
+
+```
+{
+    "id": 5,
+    "username": "johndoe",
+    "password": "$2a$04$LIrEVjCvdZv98KdKXAIQouE8LE38ga9efNctjymLxe1Vk6uXpa0Oe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@gmail.com",
+    "DOB": "03-13-1996",
+    "phoneNum": "12345",
+    "type": "volunteer",
+    "avgPerChild": 10,
+    "priceNegotiable": false,
+    "CPR_Certified": true
+}
+```
+
+- Responses
+```
+Code: 200 (OK)
+Data: { Specified Volunteer Object }
+
+Code: 404 (Not Found!)
+Message: "Volunteer with an ID of [dynamic ID] could not be found."
 
 Code 500 (Internal Server Error)
 Message: 'Something went wrong with the server!'
