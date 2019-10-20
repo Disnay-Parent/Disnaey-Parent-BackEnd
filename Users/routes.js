@@ -17,6 +17,38 @@ router.get('/logged', restricted, async (req, res) => {
     }
 })
 
+// Edit User
+router.put('/user/edit/:id', restricted, async (req, res) => {
+    const { body } = req
+    const { id } = req.params
+
+    console.log(id, body)
+
+    if(body.type === 'parent') {
+        if(body.username.length === 0 || body.password.length === 0 || body.firstName.length === 0 ||body.lastName.length === 0 ||body.email.length === 0 || !body.DOB || body.emergencyPhone.length === 0) {
+            res.status(400).json({message: 'Please make sure all the required fields are provided!'})
+        } else {
+            try {
+                const editedUser = await helpers.editUser(body, id)
+                !editedUser[0].id ? res.status(404).json({message: editedUser}) : res.status(200).json(editedUser)
+            } catch(err) {
+                res.status(500).json({message: 'Something went wrong with the server!'})
+            }
+        }
+    } else if(body.type === 'volunteer') {
+        if(body.username.length === 0 || body.password.length === 0 || body.firstName.length === 0 ||body.lastName.length === 0 ||body.email.length === 0 || !body.DOB || !body.avgPerChild) {
+            res.status(400).json({message: 'Please make sure all the required fields are provided!'})
+        } else {
+            try {
+                const editedUser = await helpers.editUser(body, id)
+                !editedUser[0].id ? res.status(404).json({message: editedUser}) : res.status(200).json(editedUser)
+            } catch(err) {
+                res.status(500).json({message: 'Something went wrong with the server!'})
+            }
+        }
+    }
+})
+
 
 
 // =============== PARENTS =================
