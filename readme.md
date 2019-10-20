@@ -169,6 +169,7 @@ Like so:
 *`URL:`***`/api/users/logged`**
 
 - Body
+
 ```No Body Required!```
 
 - Example
