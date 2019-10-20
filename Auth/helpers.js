@@ -20,7 +20,7 @@ function register(body) {
         phoneNum: body.phoneNum,
         type: body.type
     })
-    .then(response => {
+    .then(() => {
         if(body.type.toLowerCase() === 'parent') {
             return db('users')
             .where({ username: body.username })

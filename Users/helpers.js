@@ -6,7 +6,8 @@ module.exports = {
     getAllParents,
     getAllVolunteers,
     getSingleParent,
-    getSingleVolunteer
+    getSingleVolunteer,
+    editUser
 }
 
 function logged(id) {
@@ -127,5 +128,72 @@ function getSingleVolunteer(id) {
                 return user
             }
         })
+    })
+}
+
+
+// Edit User
+function editUser(body, id) {
+    return db('users')
+    .where({id})
+    .first()
+    .then(userObj => {
+        if(!userObj) {
+            return `User with an ID of ${id} does not exist!`
+        } else {
+            return db('users')
+            .where({id})
+            .update({
+                username: body.username,
+                password: body.password,
+                firstName: body.firstName,
+                lastName: body.lastName,
+                email: body.email,
+                DOB: body.DOB
+            })
+            .then(() => {
+                return db(`${body.type}s`)
+                .where({user_id: id})
+                .update(
+                    body.type === 'parent' 
+                    ? 
+                    {
+                        user_id: id,
+                        emergencyPhone: body.emergencyPhone
+                    } 
+                    : 
+                    {
+                        user_id: id,
+                        avgPerChild: body.avgPerChild,
+                        priceNegotiable: body.priceNegotiable || false,
+                        CPR_Certified: body.CPR_Certified || false
+                    }
+                )
+                .then(() => {
+                    return db('users')
+                    .then(users => {
+                        return db(`${body.type}s`)
+                        .then(rest => {
+                            const array = []
+                            users.map(each => {
+                                rest.map(eachRest => {
+                                    if(each.id === eachRest.user_id) {
+                                        for(let key in eachRest) {
+                                            if(key !== 'id' && key !== 'user_id'){
+                                                eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
+                                                eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
+                                                each[key] = eachRest[key]
+                                            }
+                                        }
+                                        array.push(each)
+                                    }
+                                })
+                            })
+                            return array
+                        })
+                    })
+                })
+            })
+        }
     })
 }

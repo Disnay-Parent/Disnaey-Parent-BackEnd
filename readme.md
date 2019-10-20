@@ -162,7 +162,7 @@ Like so:
 | authorization | String | Token to make sure that the endpoints are being used by a logged in user |
 
 
-======== GET Requests ========
+======== <h1>GET Requests</h1> ========
 
 <h1>Logged In User</h1>
 
@@ -409,3 +409,119 @@ Code 500 (Internal Server Error)
 Message: 'Something went wrong with the server!'
 ```
 __________
+
+
+========== <h1>PUT Requests</h1> ============
+
+<h1>EDIT USER</h1>
+
+*`HTTP method:`***`PUT`**
+
+*`URL:`***`/api/users/user/edit/:id`**
+
+
+<h3>User-Type: Parent</h3>
+
+- Body
+
+| Name           | Type   | Required | Unique | Description           |
+| :------------- | :----- | :------: | :----: | :-------------------- |
+| username       | string |   YES    |  YES   |                       |
+| password       | String |   YES    |   NO   |                       |
+| firstName      | String |   YES    |   NO   |                       |
+| lastName       | String |   YES    |   NO   |                       |
+| email          | String |   YES    |  YES   | must have "@" and "." |
+| DOB            | date   |   YES    |   NO   |                       |
+| phoneNum       | String |   YES    |   NO   |                       |
+| emergencyPhone | String |   YES    |   NO   |                       |
+| type           | String |   YES    |   NO   | must be "parent"      |
+
+
+- Example
+```
+    {
+        "username": "IamTheCaptainNow",
+        "password": "pass",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "123-456-7890"
+        "emergencyPhone": "098-765-4321",
+        "type": "parent"
+    }
+```
+
+- Responses
+```
+    Code: 201 (OK),
+    Data: [Array of { Parent Objects with an updated Parent Object}]
+
+    code: 400 (Bad Request),
+    Message: "Please provide all the required fields"
+
+    Code: 400 (Bad Request),
+    Message: "Please provide a valid email"
+
+    Code: 404 (Not Found),
+    Message: "User with an ID of 10 does not exist!"
+
+    Code: 500 (Internal Server Error),
+    Message: "Something went wrong when registering user
+```
+
+
+<h3>User-Type: Volunteer</h3>
+
+
+- Body
+
+| Name            | Type    | Required | Unique | Description                          |
+| :-------------- | :------ | :------: | :----: | :----------------------------------- |
+| username        | string  |   YES    |  YES   |                                      |
+| password        | String  |   YES    |   NO   |                                      |
+| firstName       | String  |   YES    |   NO   |                                      |
+| lastName        | String  |   YES    |   NO   |                                      |
+| email           | String  |   YES    |  YES   | Must have "@" and "."                |
+| DOB             | Date    |   YES    |   NO   |                                      |
+| phoneNum        | String  |   YES    |   NO   |                                      |
+| avgPerChild     | Float   |    NO    |   NO   | If not provided, defaults to "0"     |
+| priceNegotiable | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
+| CPR_Certified   | Boolean |    NO    |   NO   | If not provided, defaults to "false" |
+| type            | String  |   YES    |   NO   | Must be "volunteer"                  |
+
+
+- Example
+```
+    {
+        "username": "IamTheCaptainNow",
+        "password": "pass",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@gmail.com",
+        "DOB": "03-13-1996",
+        "phoneNum": "123-456-7890"
+        "avgPerChild": 50.25,
+        "priceNegotiable": false,
+        "CPR_Certified": true,
+        "type": "volunteer"
+    }
+```
+- Responses
+```
+    Code: 201 (OK),
+    Data: [Array of { Volunteer Objects with an updated Volunteer Object}]
+
+    code: 400 (Bad Request),
+    Message: "Please provide all the required fields"
+
+    Code: 400 (Bad Request),
+    Message: "Please provide a valid email"
+
+    Code: 404 (Not Found),
+    Message: "User with an ID of 10 does not exist!"
+
+    Code: 500 (Internal Server Error),
+    Message: "Something went wrong when registering user
+```
+____________
