@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs')
 
 const helpers = require('./helpers.js')
 
-const { generateToken, restricted } = require('./middleware.js')
+const { generateToken } = require('./middleware.js')
 
 
 router.post('/register', async (req, res) => {
@@ -64,23 +64,6 @@ router.post('/login', (req, res) => {
             }
         }
     })
-})
-
-//Getting Logged In User
-router.get('/logged', restricted, async (req, res) => {
-
-    console.log(req.decodedToken.id)
-
-    try {
-        const loggedIn = await helpers.logged(req.decodedToken.id)
-        res.status(200).json(loggedIn)
-    } catch(err) {
-        res.status(500).json({message: 'Something went wrong with the server!'})
-    }
-    
-
-    
-
 })
 
 
