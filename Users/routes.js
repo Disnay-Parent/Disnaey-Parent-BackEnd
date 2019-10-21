@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcryptjs')
 
 const helpers = require('./helpers.js')
 
@@ -21,6 +22,9 @@ router.get('/logged', restricted, async (req, res) => {
 router.put('/user/edit/:id', restricted, async (req, res) => {
     const { body } = req
     const { id } = req.params
+
+    const hash = bcrypt.hashSync(body.password, 4)
+    body.password = hash
 
     console.log(id, body)
 
