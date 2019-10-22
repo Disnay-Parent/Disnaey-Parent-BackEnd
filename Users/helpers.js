@@ -338,8 +338,7 @@ function editUser(body, id) {
                                         }
                                     })
                                 return users
-                            }
-                            
+                            }  
                         })
                     })
                 })
