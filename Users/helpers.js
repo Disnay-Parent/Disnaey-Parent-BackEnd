@@ -19,15 +19,40 @@ function logged(id) {
         .where({user_id: user.id})
         .first()
         .then(rest => {
-            for(let prop in rest) {
-                if(prop !== 'id' && prop !== 'user_id'){
-                    user[prop] = rest[prop]
+            if(user.type === 'parent') {
+                return db('posts')
+                .then(posts => {
+                    return db('comments')
+                    .then(comments => {
+                        user.posts = []
+                        posts.map(eachPost => {
+                            eachPost.comments = []
+                            comments.map(eachComment => {
+                                if(eachPost.id === eachComment.post_id) {
+                                    eachPost.comments.push(eachComment)
+                                }
+                            })
+                            if(eachPost.user_id === user.id) {
+                                user.posts.push(eachPost)
+                            }
+                        })
+                        for(let prop in rest) {
+                            if(prop !== 'id' && prop !== 'user_id'){
+                                user[prop] = rest[prop]
+                            }
+                        }
+                        return user
+                    })
+                })
+            } else {
+                for(let prop in rest) {
+                    if(prop !== 'id' && prop !== 'user_id'){
+                        user[prop] = rest[prop]
+                    }
                 }
+                return user
             }
-            
-            return user
         })
-        
     })
 }
 
@@ -37,20 +62,44 @@ function getAllParents() {
     .then(users => {
         return db('parents')
         .then(parents => {
-            const array = []
-            users.map(each => {
-                parents.map(parent => {
-                    if(each.id === parent.user_id) {
-                        for(let key in parent) {
-                            if(key !== 'id' && key !== 'user_id'){
-                                each[key] = parent[key]
+            return db('posts') 
+            .then(posts => {
+                return db('comments')
+                .then(comments => {
+                    posts.map(eachPost => {
+                        eachPost.comments = []
+                        comments.map(eachComment => {
+                            if(eachPost.id === eachComment.post_id) {
+                                eachPost.comments.push(eachComment)
                             }
-                        }
-                        array.push(each)
-                    }
+                        })
+                    })
+                    users.map(eachUser => {
+                        eachUser.posts = []
+                        posts.map(eachPost => {
+                            if(eachUser.id === eachPost.user_id){
+                                eachUser.posts.push(eachPost)
+                            }
+                        })
+                    })
+                    const array = []
+                    users.map(each => {
+                        parents.map(parent => {
+                            if(each.id === parent.user_id) {
+                                for(let key in parent) {
+                                    if(key !== 'id' && key !== 'user_id'){
+                                        each[key] = parent[key]
+                                    }
+                                }
+                                array.push(each)
+                            }
+                        })
+                    })
+                    return array
                 })
+                
             })
-            return array
+            
         })
     })
 }
@@ -94,12 +143,32 @@ function getSingleParent(id) {
             if(!rest) {
                 return `Parent with an ID of ${id} could not be found.`
             } else {
-                for(let key in rest) {
-                    if(key !== 'id' && key !== 'user_id'){
-                        user[key] = rest[key]
-                    }
-                }
-                return user
+                return db('posts')
+                .then(posts => {
+                    return db('comments')
+                    .then(comments => {
+                        user.posts = []
+                        posts.map(eachPost => {
+                            eachPost.comments = []
+                            comments.map(eachComment => {
+                                if(eachPost.id === eachComment.post_id){
+                                    eachPost.comments.push(eachComment)
+                                }
+                            })
+
+                            if(eachPost.user_id === user.id) {
+                                user.posts.push(eachPost) 
+                            }
+                        })
+
+                        for(let key in rest) {
+                            if(key !== 'id' && key !== 'user_id'){
+                                user[key] = rest[key]
+                            }
+                        }
+                        return user
+                    })
+                })
             }
         })
     })
@@ -171,25 +240,62 @@ function editUser(body, id) {
                 )
                 .then(() => {
                     return db('users')
+                    .where({id})
+                    .first()
                     .then(users => {
                         return db(`${body.type}s`)
                         .then(rest => {
-                            const array = []
-                            users.map(each => {
-                                rest.map(eachRest => {
-                                    if(each.id === eachRest.user_id) {
-                                        for(let key in eachRest) {
-                                            if(key !== 'id' && key !== 'user_id'){
-                                                eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
-                                                eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
-                                                each[key] = eachRest[key]
+                            if(body.type === 'parent') {
+                                return db('posts')
+                                .then(posts => {
+                                    return db('comments')
+                                    .then(comments => {
+                                        posts.map(eachPost => {
+                                            eachPost.comments = []
+                                            comments.map(eachComment => {
+                                                if(eachComment.post_id === eachPost.id) {
+                                                    eachPost.comments.push(eachComment)
+                                                }
+                                            })
+                                        })
+                                        
+                                        users.posts = []
+                                        posts.map(eachPost => {
+                                            if(eachPost.user_id === users.id){
+                                                users.posts.push(eachPost)
+                                            }
+                                        })
+
+                                        rest.map(eachRest => {
+                                            if(users.id === eachRest.user_id) {
+                                                for(let key in eachRest) {
+                                                    if(key !== 'id' && key !== 'user_id'){
+                                                        eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
+                                                        eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
+                                                        users[key] = eachRest[key]
+                                                    }
+                                                }
+                                            }
+                                        })
+                                        
+                                        return users
+                                    })
+                                })
+                            } else {
+                                    rest.map(eachRest => {
+                                        if(users.id === eachRest.user_id) {
+                                            for(let key in eachRest) {
+                                                if(key !== 'id' && key !== 'user_id'){
+                                                    eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
+                                                    eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
+                                                    users[key] = eachRest[key]
+                                                }
                                             }
                                         }
-                                        array.push(each)
-                                    }
-                                })
-                            })
-                            return array
+                                    })
+                                return users
+                            }
+                            
                         })
                     })
                 })
