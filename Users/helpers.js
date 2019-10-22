@@ -24,24 +24,36 @@ function logged(id) {
                 .then(posts => {
                     return db('comments')
                     .then(comments => {
-                        user.posts = []
-                        posts.map(eachPost => {
-                            eachPost.comments = []
-                            comments.map(eachComment => {
-                                if(eachPost.id === eachComment.post_id) {
-                                    eachPost.comments.push(eachComment)
+                        return db('children')
+                        .where({user_id: id})
+                        .then(children => {
+                            user.children = []
+                            children.map(eachChild => {
+                                if(eachChild.user_id === user.id) {
+                                    user.children.push(eachChild)
                                 }
                             })
-                            if(eachPost.user_id === user.id) {
-                                user.posts.push(eachPost)
+
+                            user.posts = []
+                            posts.map(eachPost => {
+                                eachPost.comments = []
+                                comments.map(eachComment => {
+                                    if(eachPost.id === eachComment.post_id) {
+                                        eachPost.comments.push(eachComment)
+                                    }
+                                })
+                                if(eachPost.user_id === user.id) {
+                                    user.posts.push(eachPost)
+                                }
+                            })
+                            for(let prop in rest) {
+                                if(prop !== 'id' && prop !== 'user_id'){
+                                    user[prop] = rest[prop]
+                                }
                             }
+                            return user
                         })
-                        for(let prop in rest) {
-                            if(prop !== 'id' && prop !== 'user_id'){
-                                user[prop] = rest[prop]
-                            }
-                        }
-                        return user
+                        
                     })
                 })
             } else {
@@ -66,36 +78,46 @@ function getAllParents() {
             .then(posts => {
                 return db('comments')
                 .then(comments => {
-                    posts.map(eachPost => {
-                        eachPost.comments = []
-                        comments.map(eachComment => {
-                            if(eachPost.id === eachComment.post_id) {
-                                eachPost.comments.push(eachComment)
-                            }
-                        })
-                    })
-                    users.map(eachUser => {
-                        eachUser.posts = []
+                    return db('children')
+                    .then(children => {
                         posts.map(eachPost => {
-                            if(eachUser.id === eachPost.user_id){
-                                eachUser.posts.push(eachPost)
-                            }
+                            eachPost.comments = []
+                            comments.map(eachComment => {
+                                if(eachPost.id === eachComment.post_id) {
+                                    eachPost.comments.push(eachComment)
+                                }
+                            })
                         })
-                    })
-                    const array = []
-                    users.map(each => {
-                        parents.map(parent => {
-                            if(each.id === parent.user_id) {
-                                for(let key in parent) {
-                                    if(key !== 'id' && key !== 'user_id'){
-                                        each[key] = parent[key]
+
+                        users.map(eachUser => {
+                            eachUser.posts = []
+                            eachUser.children = []
+                            posts.map(eachPost => {
+                                if(eachUser.id === eachPost.user_id){
+                                    eachUser.posts.push(eachPost)
+                                }
+                            })
+
+                            children.map(eachChild => {
+                                if(eachUser.id === eachChild.user_id) {
+                                    eachUser.children.push(eachChild)
+                                }
+                            })
+
+                            parents.map(parent => {
+                                if(eachUser.id === parent.user_id) {
+                                    for(let key in parent) {
+                                        if(key !== 'id' && key !== 'user_id'){
+                                            eachUser[key] = parent[key]
+                                        }
                                     }
                                 }
-                                array.push(each)
-                            }
+                            })
                         })
+
+                        return users
                     })
-                    return array
+                    
                 })
                 
             })
@@ -147,26 +169,38 @@ function getSingleParent(id) {
                 .then(posts => {
                     return db('comments')
                     .then(comments => {
-                        user.posts = []
-                        posts.map(eachPost => {
-                            eachPost.comments = []
-                            comments.map(eachComment => {
-                                if(eachPost.id === eachComment.post_id){
-                                    eachPost.comments.push(eachComment)
+                        return db('children')
+                        .where({user_id: id})
+                        .then(children => {
+                            user.posts = []
+                            posts.map(eachPost => {
+                                eachPost.comments = []
+                                comments.map(eachComment => {
+                                    if(eachPost.id === eachComment.post_id){
+                                        eachPost.comments.push(eachComment)
+                                    }
+                                })
+    
+                                if(eachPost.user_id === user.id) {
+                                    user.posts.push(eachPost) 
                                 }
                             })
 
-                            if(eachPost.user_id === user.id) {
-                                user.posts.push(eachPost) 
+                            user.children = []
+                            children.map(eachChild => {
+                                if(eachChild.user_id === user.id){
+                                    user.children.push(eachChild)
+                                }
+                            })
+    
+                            for(let key in rest) {
+                                if(key !== 'id' && key !== 'user_id'){
+                                    user[key] = rest[key]
+                                }
                             }
+                            return user
                         })
-
-                        for(let key in rest) {
-                            if(key !== 'id' && key !== 'user_id'){
-                                user[key] = rest[key]
-                            }
-                        }
-                        return user
+                        
                     })
                 })
             }
@@ -250,35 +284,45 @@ function editUser(body, id) {
                                 .then(posts => {
                                     return db('comments')
                                     .then(comments => {
-                                        posts.map(eachPost => {
-                                            eachPost.comments = []
-                                            comments.map(eachComment => {
-                                                if(eachComment.post_id === eachPost.id) {
-                                                    eachPost.comments.push(eachComment)
+                                        return db('children')
+                                        .where({user_id: users.id})
+                                        .then(children => {
+                                            users.posts = []
+                                            posts.map(eachPost => {
+                                                eachPost.comments = []
+                                                comments.map(eachComment => {
+                                                    if(eachComment.post_id === eachPost.id) {
+                                                        eachPost.comments.push(eachComment)
+                                                    }
+                                                })
+
+                                                if(eachPost.user_id === users.id){
+                                                    users.posts.push(eachPost)
                                                 }
                                             })
-                                        })
-                                        
-                                        users.posts = []
-                                        posts.map(eachPost => {
-                                            if(eachPost.user_id === users.id){
-                                                users.posts.push(eachPost)
-                                            }
-                                        })
 
-                                        rest.map(eachRest => {
-                                            if(users.id === eachRest.user_id) {
-                                                for(let key in eachRest) {
-                                                    if(key !== 'id' && key !== 'user_id'){
-                                                        eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
-                                                        eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
-                                                        users[key] = eachRest[key]
+                                            users.children = []
+                                            children.map(eachChild => {
+                                                if(eachChild.user_id === users.id) {
+                                                    users.children.push(eachChild)
+                                                }
+                                            })
+    
+                                            rest.map(eachRest => {
+                                                if(users.id === eachRest.user_id) {
+                                                    for(let key in eachRest) {
+                                                        if(key !== 'id' && key !== 'user_id'){
+                                                            eachRest.priceNegotiable == 0 ? eachRest.priceNegotiable = false : eachRest.priceNegotiable = true
+                                                            eachRest.CPR_Certified == 0 ? eachRest.CPR_Certified = false : eachRest.CPR_Certified = true
+                                                            users[key] = eachRest[key]
+                                                        }
                                                     }
                                                 }
-                                            }
+                                            })
+                                            
+                                            return users
                                         })
                                         
-                                        return users
                                     })
                                 })
                             } else {
