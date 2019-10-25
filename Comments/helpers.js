@@ -37,7 +37,7 @@ function editComment(body, id) {
     })
 }
 
-function deleteComment(id) {
+function deleteComment(id, post_id) {
     return db('comments')
     .where({id})
     .first()
@@ -49,7 +49,10 @@ function deleteComment(id) {
             .where({id})
             .first()
             .del()
-            .then(() => db('comments'))
+            .then(() => {
+                return db('comments')
+                .where({post_id})
+            })
         }
     })
 }

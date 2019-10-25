@@ -87,6 +87,28 @@ router.post('/create', restricted, async (req, res) => {
     }
 })
 
+// Delete comment
+router.delete('/:postId/delete/:id', restricted, async (req, res) => {
+    if(!req.params.id) {
+        res.status(400).json({message: 'Please provide an ID!'})
+    } else {
+        try {
+            const deleted = await helpers.deleteComment(req.params.id, req.params.postId)
+
+            deleted === 'notFound'
+            ?
+            res.status(404).json({message: `Comment with an ID of ${req.params.id} does not exist!`})
+            :
+            res.status(200).json(deleted)
+        } catch(err) {
+            res.status(500).json({message: 'Something went wrong with the server!'})
+        }
+        
+    }
+})
+
+
+
 
 
 module.exports = router

@@ -2,7 +2,8 @@ const db = require('../data/db.js')
 
 module.exports = {
     addChild,
-    userChildren
+    userChildren,
+    editChild
 }
 
 function addChild(body, id) {
@@ -24,6 +25,17 @@ function userChildren(id) {
         } else {
             return db('children')
             .where({user_id: user.id})
+        }
+    })
+}
+
+function editChild(id) {
+    return db('children')
+    .where({id})
+    .first()
+    .then(child => {
+        if(!child){
+            return 'notFound'
         }
     })
 }
