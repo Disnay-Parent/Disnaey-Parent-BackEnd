@@ -3,7 +3,8 @@ const db = require('../data/db.js')
 module.exports = {
     addChild,
     userChildren,
-    editChild
+    editChild,
+    deleteChild
 }
 
 function addChild(body, id) {
@@ -29,13 +30,42 @@ function userChildren(id) {
     })
 }
 
-function editChild(id) {
+function editChild(id, body) {
     return db('children')
     .where({id})
     .first()
     .then(child => {
         if(!child){
             return 'notFound'
+        } else {
+            return db('children')
+            .where({id})
+            .update(body)
+            .then(() => {
+                return db('children')
+                .where({id})
+                .first()
+            })
+        }
+    })
+}
+
+function deleteChild(id, user_id) {
+    return db('children')
+    .where({id})
+    .first()
+    .then(child => {
+        if(!child){
+            return 'notFound'
+        } else {
+            return db('children')
+            .where({id})
+            .first()
+            .del()
+            .then(() => {
+                return db('children')
+                .where({user_id})
+            })
         }
     })
 }
