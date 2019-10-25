@@ -53,6 +53,7 @@ router.post('/login', (req, res) => {
     helpers
     .login(username)
     .then(user => {
+        console.log('user', user)
         if(!user) {
             res.status(404).json({ message: 'Can\'t find an user with the specified username'})
         } else {

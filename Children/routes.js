@@ -30,8 +30,6 @@ router.post('/create', restricted, async (req, res) => {
     const { name, DOB } = req.body
     req.body.user_id = req.decodedToken.id
 
-    console.log(req.body)
-
     if(!name || !DOB || name.length === 0 || DOB.length === 0) {
         res.status(400).json({message: 'Please provide all the required fields!'})
     } else {
@@ -39,6 +37,24 @@ router.post('/create', restricted, async (req, res) => {
             const added = await helpers.addChild(req.body, req.decodedToken.id)
 
             res.status(201).json(added)
+        } catch(err) {
+            res.status(500).json({message: 'Something went wrong with the server!'})
+        }
+    }
+})
+
+router.put('/edit/:id', restricted, async (req, res) => {
+    if(!req.params.id) {
+        res.status(400).json({message: 'Please provide an ID!'})
+    } else {
+        try {
+            const edited = await helpers.editChild(req.params.id)
+
+            edited === 'notFound'
+            ?
+            res.status(404).json({message: `Child with an ID of ${req.params.id} does not exist!`})
+            :
+            res.status(200).json(edited)
         } catch(err) {
             res.status(500).json({message: 'Something went wrong with the server!'})
         }

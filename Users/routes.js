@@ -23,11 +23,14 @@ router.put('/user/edit/:id', restricted, async (req, res) => {
     const { body } = req
     const { id } = req.params
 
-    const hash = bcrypt.hashSync(body.password, 4)
-    body.password = hash
+    if(body.password) {
+        const hash = bcrypt.hashSync(body.password, 4)
+        body.password = hash
+    }
+    
 
     if(body.type === 'parent') {
-        if(body.username.length === 0 || body.password.length === 0 || body.firstName.length === 0 ||body.lastName.length === 0 ||body.email.length === 0 || !body.DOB || body.emergencyPhone.length === 0) {
+        if( body.firstName.length === 0 || body.lastName.length === 0 ||  !body.DOB || body.emergencyPhone.length === 0) {
             res.status(400).json({message: 'Please make sure all the required fields are provided!'})
         } else {
             try {
@@ -38,7 +41,7 @@ router.put('/user/edit/:id', restricted, async (req, res) => {
             }
         }
     } else if(body.type === 'volunteer') {
-        if(body.username.length === 0 || body.password.length === 0 || body.firstName.length === 0 ||body.lastName.length === 0 ||body.email.length === 0 || !body.DOB || !body.avgPerChild) {
+        if(body.firstName.length === 0 ||body.lastName.length === 0 || !body.DOB || !body.avgPerChild) {
             res.status(400).json({message: 'Please make sure all the required fields are provided!'})
         } else {
             try {
