@@ -35,6 +35,7 @@ router.put('/user/edit/:id', restricted, async (req, res) => {
         } else {
             try {
                 const editedUser = await helpers.editUser(body, id)
+                console.log(editedUser, 'user')
                 !editedUser ? res.status(404).json({message: editedUser}) : res.status(200).json(editedUser)
             } catch(err) {
                 res.status(500).json({message: 'Something went wrong with the server!'})

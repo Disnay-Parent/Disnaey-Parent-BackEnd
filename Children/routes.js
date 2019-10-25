@@ -48,13 +48,31 @@ router.put('/edit/:id', restricted, async (req, res) => {
         res.status(400).json({message: 'Please provide an ID!'})
     } else {
         try {
-            const edited = await helpers.editChild(req.params.id)
+            const edited = await helpers.editChild(req.params.id, req.body)
 
             edited === 'notFound'
             ?
             res.status(404).json({message: `Child with an ID of ${req.params.id} does not exist!`})
             :
             res.status(200).json(edited)
+        } catch(err) {
+            res.status(500).json({message: 'Something went wrong with the server!'})
+        }
+    }
+})
+
+router.delete('/delete/:id', restricted, async (req, res) => {
+    if(!req.params.id) {
+        res.status(400).json({message: 'Please provide an ID!'})
+    } else {
+        try {
+            const deleted = await helpers.deleteChild(req.params.id, req.decodedToken.id)
+
+            deleted === 'notFound' 
+            ?
+            res.status(404).json({message: `Child with an ID of ${req.params.id} does not exist!`})
+            :
+            res.status(200).json(deleted)
         } catch(err) {
             res.status(500).json({message: 'Something went wrong with the server!'})
         }
